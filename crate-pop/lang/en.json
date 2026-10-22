@@ -1,0 +1,43 @@
+{
+  "CRATEPOP": {
+    "DefaultName": "Crate",
+    "PlaceCrate": "Place a loot crate",
+    "HUDMake": "Make this a loot crate",
+    "HUDRemove": "Stop this being a loot crate",
+    "KeyOpen": "Open the loot crate under the mouse",
+    "KeyOpenHint": "Hover over a crate and press this key, if double-clicking doesn't open it.",
+    "Take": "Take",
+    "TakeAll": "Take all",
+    "TakeOne": "Take 1",
+    "Increase": "One more",
+    "Decrease": "One fewer",
+    "Remove": "Remove from crate",
+    "Empty": "Nothing left in here.",
+    "EmptyGM": "Empty. Drag items here from the sidebar, a compendium or a sheet.",
+    "DropHint": "Drag items here to add them",
+    "Locked": "Locked",
+    "Unlocked": "Unlocked",
+    "TakingTo": "Taking to {name}. Or drag onto any sheet you own.",
+    "NoTarget": "No character to give it to. Drag the item onto your character sheet instead.",
+    "DropOnSheet": "Drop it on a character sheet, a character in the Actors sidebar, or your token.",
+    "OnlyItems": "Only items can go in a crate.",
+    "OnlyGMAdds": "Only the GM can put things in a crate.",
+    "TookOne": "{actor} took {name}.",
+    "TookMany": "{actor} took {qty} × {name}.",
+    "Errors": {
+      "gone": "Someone already took that.",
+      "locked": "It's locked.",
+      "noGM": "A GM needs to be logged in to hand out loot.",
+      "timeout": "The GM didn't answer in time. Try again.",
+      "noPermission": "You don't own that character.",
+      "noActor": "Couldn't find that character.",
+      "noContainer": "That crate isn't there any more.",
+      "noItem": "Couldn't find that item.",
+      "grantFailed": "Couldn't add it to the sheet, so it was put back in the crate.",
+      "lost": "Couldn't add it or put it back. The GM's console (F12) has the item's details.",
+      "badQuantity": "That amount doesn't work.",
+      "notActiveGM": "Sent to the wrong GM. Try again.",
+      "error": "Something went wrong. The console (F12) has details."
+    }
+  }
+}

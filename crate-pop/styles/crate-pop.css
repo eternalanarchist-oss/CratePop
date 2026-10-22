@@ -1,0 +1,174 @@
+/*
+ * Crate Pop
+ * Colours, fonts and buttons come from Foundry's theme and the active system's stylesheet.
+ * This file only sets layout and the box-opening animation, and every colour below falls
+ * back to the theme's own variables or to the current text colour.
+ */
+
+.crate-pop {
+  --cp-line: var(--color-border, color-mix(in srgb, currentColor 30%, transparent));
+  --cp-soft: color-mix(in srgb, currentColor 8%, transparent);
+  --cp-wood: color-mix(in srgb, currentColor 16%, transparent);
+  --cp-wood-dark: color-mix(in srgb, currentColor 26%, transparent);
+  min-width: 300px;
+}
+
+.crate-pop .window-content {
+  padding: 0.5rem;
+}
+
+.crate-pop .cp-crate {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  perspective: 700px;
+}
+
+/* ---------- The lid ---------- */
+
+.crate-pop .cp-lid {
+  position: relative;
+  display: flex;
+  height: 8px;
+  transform-style: preserve-3d;
+  border-bottom: 1px solid var(--cp-line);
+}
+
+.crate-pop .cp-flap {
+  flex: 1;
+  height: 100%;
+  border: 1px solid var(--cp-line);
+  background:
+    repeating-linear-gradient(90deg, transparent 0 22px, var(--cp-wood-dark) 22px 24px),
+    linear-gradient(var(--cp-wood), var(--cp-soft));
+  backface-visibility: visible;
+}
+
+.crate-pop .cp-flap-left { transform-origin: left center; border-radius: 3px 0 0 0; }
+.crate-pop .cp-flap-right { transform-origin: right center; border-radius: 0 3px 0 0; }
+
+.crate-pop .cp-open .cp-flap-left { transform: rotateY(-70deg); opacity: 0.35; }
+.crate-pop .cp-open .cp-flap-right { transform: rotateY(70deg); opacity: 0.35; }
+
+/* First render only: the crate jolts, the lid flaps swing open, then the contents rise out. */
+.crate-pop .cp-opening { animation: cp-jolt 260ms ease-out both; }
+.crate-pop .cp-opening .cp-lid { animation: cp-lid-shrink 320ms ease-in 380ms both; }
+.crate-pop .cp-opening .cp-flap-left { animation: cp-flap-left 520ms cubic-bezier(.2, .9, .3, 1.2) 120ms both; }
+.crate-pop .cp-opening .cp-flap-right { animation: cp-flap-right 520ms cubic-bezier(.2, .9, .3, 1.2) 160ms both; }
+.crate-pop .cp-opening .cp-entry,
+.crate-pop .cp-opening .cp-empty {
+  animation: cp-rise 300ms ease-out both;
+  animation-delay: calc(480ms + var(--cp-i, 0) * 55ms);
+}
+
+@keyframes cp-jolt {
+  0% { transform: translateY(0) scale(0.97); }
+  40% { transform: translateY(-3px) scale(1.01); }
+  100% { transform: none; }
+}
+
+@keyframes cp-lid-shrink {
+  from { height: 44px; }
+  to { height: 8px; }
+}
+
+@keyframes cp-flap-left {
+  0% { transform: rotateY(0); opacity: 1; }
+  100% { transform: rotateY(-70deg); opacity: 0.35; }
+}
+
+@keyframes cp-flap-right {
+  0% { transform: rotateY(0); opacity: 1; }
+  100% { transform: rotateY(70deg); opacity: 0.35; }
+}
+
+@keyframes cp-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Contents ---------- */
+
+.crate-pop .cp-interior {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.crate-pop .cp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.crate-pop .cp-entry {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 4px 6px;
+  border: 1px solid var(--cp-line);
+  border-radius: 4px;
+  background: var(--cp-soft);
+  cursor: grab;
+}
+
+.crate-pop .cp-entry.cp-dragging { opacity: 0.5; cursor: grabbing; }
+
+.crate-pop .cp-img {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  object-fit: contain;
+  border: none;
+}
+
+.crate-pop .cp-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crate-pop .cp-qty { opacity: 0.8; font-variant-numeric: tabular-nums; }
+
+.crate-pop .cp-controls { display: flex; gap: 4px; flex: 0 0 auto; }
+.crate-pop .cp-controls button { flex: 0 0 auto; width: auto; line-height: 1.6; padding: 0 0.5rem; }
+.crate-pop .cp-controls .cp-icon { padding: 0 0.35rem; }
+
+.crate-pop .cp-empty {
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+  opacity: 0.75;
+  border: 1px dashed var(--cp-line);
+  border-radius: 4px;
+}
+
+.crate-pop .cp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.9em;
+}
+
+.crate-pop .cp-hint { opacity: 0.75; }
+.crate-pop .cp-footer button { flex: 0 0 auto; width: auto; }
+
+.crate-pop.cp-drop-hover .window-content {
+  outline: 2px dashed var(--cp-line);
+  outline-offset: -4px;
+}
+
+/* Token HUD button state */
+.crate-pop-hud.active { color: var(--color-text-emphatic, inherit); }
+
+@media (prefers-reduced-motion: reduce) {
+  .crate-pop .cp-opening,
+  .crate-pop .cp-opening * { animation: none !important; }
+  .crate-pop .cp-opening .cp-flap-left { transform: rotateY(-70deg); opacity: 0.35; }
+  .crate-pop .cp-opening .cp-flap-right { transform: rotateY(70deg); opacity: 0.35; }
+}
